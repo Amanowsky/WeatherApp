@@ -1,0 +1,33 @@
+#weatherApp{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 2%;
+}
+.weatherApp_header{
+    color: rgb(255, 255, 255);
+    margin-top: 5%;
+    text-align: center;
+    h1{
+        font-size: 3em;
+        font-weight: 100;
+    }
+    h2{
+        font-size: 6em;
+        font-weight: 100;
+    }
+    h2::after{
+        content: "°";
+        position: absolute;
+    }
+    h3{
+        font-size: 1.2em;
+    }
+    h4{
+        margin-top: 2%;
+        font-size: 1.2em;
+    }
+}

@@ -1,0 +1,66 @@
+.weatherApp_main{
+    width: 100%;
+    height: 50%;
+    display: grid;
+    grid-template-areas: 
+                "a a c"
+                "b d c";
+    gap: 20px;
+    .main_section{
+        background: white;
+        filter: opacity(.5);
+        border-radius: 20px;
+        padding: 1.5% 2%;
+    }
+    .main_current{
+        grid-area: a;
+        overflow: hidden;
+        .main_current_alert{
+            display: flex;
+            position: relative;
+            align-items: center;
+            width: 100%;
+            height: 15%;
+            font-size: 1em;
+            font-weight: 700;
+            color: black;
+            
+        }
+        .main_current_alert::after{
+            content: "";
+            height: 1px;
+            width: 102%;
+            background-color: rgba(163, 163, 163, 0.623);
+            position: absolute; 
+            top: 110%;
+        }
+        .current_weather{
+            height: 90%;
+            display: flex;
+            gap: 2%;
+            .current_weather_block{
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                .time_mode{
+                    margin-left: 1px;
+                    font-size: 0.8em;
+                }
+            }
+        }
+    }
+    .main_forecast{
+        grid-area: b;
+        
+    }
+    .main_airquality{
+        grid-area: d;
+        
+    }
+    .main_map{
+        grid-area: c;
+        
+    }
+}

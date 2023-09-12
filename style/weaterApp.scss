@@ -1,0 +1,17 @@
+@use 'variables.scss';
+@use 'header.scss';
+@use 'main.scss';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../assets/background.jpg);
+    background-position: center;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
