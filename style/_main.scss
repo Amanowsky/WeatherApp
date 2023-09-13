@@ -2,19 +2,20 @@
     width: 100%;
     height: 50%;
     display: grid;
-    grid-template-areas: 
-                "a a c"
-                "b d c";
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
     .main_section{
         background: white;
         filter: opacity(.5);
         border-radius: 20px;
-        padding: 1.5% 2%;
+        padding: 1% 2%;
     }
     .main_current{
-        grid-area: a;
+        grid-area: 1 / 1 / 2 / 3;
         overflow: hidden;
+        height: 100%;
         .main_current_alert{
             display: flex;
             position: relative;
@@ -22,8 +23,9 @@
             width: 100%;
             height: 15%;
             font-size: 1em;
-            font-weight: 700;
+            font-weight: 300;
             color: black;
+            filter: opacity(0.6);
             
         }
         .main_current_alert::after{
@@ -44,23 +46,27 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: space-evenly;
+                font-size: 0.8em;
+                h2{
+                    font-weight: 400;
+                }
                 .time_mode{
                     margin-left: 1px;
-                    font-size: 0.8em;
+                    font-size: 0.8rem;
                 }
             }
         }
     }
     .main_forecast{
-        grid-area: b;
-        
+        grid-area: 2 / 1 / 3 / 2;
+        height: 100%;
     }
     .main_airquality{
-        grid-area: d;
+        grid-area: 2 / 2 / 3 / 3;
         
     }
     .main_map{
-        grid-area: c;
+        grid-area: 1 / 3 / 3 / 4;
         
     }
 }
