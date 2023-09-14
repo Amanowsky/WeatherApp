@@ -1,0 +1,46 @@
+.main_current{
+    grid-area: 1 / 1 / 2 / 3;
+    overflow: hidden;
+    height: 100%;
+    padding: 1% 2%;
+    .main_current_alert{
+        display: flex;
+        position: relative;
+        align-items: center;
+        width: 100%;
+        height: 15%;
+        font-size: 1em;
+        font-weight: 300;
+        color: black;
+        filter: opacity(0.6);
+        
+    }
+    .main_current_alert::after{
+        content: "";
+        height: 1px;
+        width: 102%;
+        background-color: rgba(163, 163, 163, 0.623);
+        position: absolute; 
+        top: 110%;
+    }
+    .current_weather{
+        height: 90%;
+        display: flex;
+        gap: 2%;
+        .current_weather_block{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            font-size: 0.8em;
+            h2{
+                font-weight: 400;
+            }
+            .time_mode{
+                margin-left: 1px;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}

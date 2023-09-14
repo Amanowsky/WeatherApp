@@ -1,7 +1,8 @@
 @use 'variables.scss';
 @use 'header.scss';
-@use 'main.scss';
-
+@use 'mainCurrent.scss';
+@use 'mainForecast.scss';
+@use 'mainAirquality.scss';
 *{
     margin: 0;
     padding: 0;
@@ -15,3 +16,22 @@ body{
     background-size: cover;
     font-family: 'Roboto', sans-serif;
 }
+.weatherApp_main{
+    width: 100%;
+    height: 50%;
+    display: grid;
+    grid-template-columns: (2fr 1fr 1.5fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    .main_section{
+        background: white;
+        filter: opacity(.5);
+        border-radius: 20px;
+    }}
+
+
+    .main_map{
+        grid-area: 1 / 3 / 3 / 4;
+        
+    }
