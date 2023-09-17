@@ -16,19 +16,31 @@ body{
     background-size: cover;
     font-family: 'Roboto', sans-serif;
 }
-.weatherApp_main{
+#weatherApp{
     width: 100%;
-    height: 50%;
-    display: grid;
-    grid-template-columns: (2fr 1fr 1.5fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    .main_section{
-        background: white;
-        filter: opacity(.5);
-        border-radius: 20px;
-    }}
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 2%;
+
+    .weatherApp__mainSection{
+        width: 100%;
+        height: 50%;
+        display: grid;
+        grid-template-columns: (2fr 1fr 1.5fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        .mainSection{
+            background: white;
+            filter: opacity(.5);
+            border-radius: 20px;
+        }}
+}
+
+
 
 
     .main_map{

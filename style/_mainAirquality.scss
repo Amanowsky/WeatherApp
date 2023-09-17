@@ -1,6 +1,6 @@
 @use 'variables.scss';
 
-.main_airquality {
+.mainSection__airquality {
     grid-area: 2 / 2 / 3 / 3;
     padding: 3% 5%;
     display: flex;
@@ -40,7 +40,7 @@
         justify-content: center;
         align-items: center;
 
-        .airCondition {
+        .airquality__ratio {
             height: 7px;
             border-radius: 7px;
             width: 100%;
@@ -49,7 +49,7 @@
             filter: opacity(0.9);
             overflow: hidden;
             position: relative;
-            .air_dot{
+            .ratio__dot{
                 filter:contrast(5);
                 height: 9px;
                 width: 9px;

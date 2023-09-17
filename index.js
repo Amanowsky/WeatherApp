@@ -18,12 +18,12 @@ const AIR_DOT = document.querySelector('#AIR_DOT');
 
 
 const setCurrentTemp = (weather) => {
-    const {current: {condition: {text},temp_c},location: {name},forecast:{forecastday:[today]}} = weather;
-    const {day: {maxtemp_c,mintemp_c}} = today;
+    const { current: { condition: { text }, temp_c }, location: { name }, forecast: { forecastday: [today] } } = weather;
+    const { day: { maxtemp_c, mintemp_c } } = today;
     HEADER_CITY.textContent = `${name}`;
     HEADER_TEMP.textContent = `${temp_c}`;
     HEADER_WEATHER.textContent = `${text}`;
-    HEADER_HL.textContent = `H:${maxtemp_c}° L:${mintemp_c}°`
+    HEADER_HL.textContent = `H:${maxtemp_c} L:${mintemp_c}`
 
 }
 
@@ -34,7 +34,7 @@ const createCurrentWeather = (temp, time, type, icon) => {
     const h2_temp = document.createElement('h2');
     const span = document.createElement('span');
     const img = document.createElement('img');
-    div.className = "current_weather_block";
+    div.className = "weather__block";
     h2_hour.innerText = `${time}`;
     span.innerText = `${type}`;
     img.src = `${icon}`
@@ -46,7 +46,8 @@ const createCurrentWeather = (temp, time, type, icon) => {
     return div;
 }
 
-const fetchWeatherData = async (city,type,keywords) => {
+const fetchWeatherData = async (city, type, keywords) => {
+
     try {
         const response = await fetch(`${BASE_URL}${type}?key=${WEATER_API_KEY}&q=${city}${keywords}`);
         if (!response.ok) {
@@ -66,18 +67,23 @@ const createForecastWeather = async (weather) => {
     const { forecast: { forecastday } } = weather;
     const promises = [];
 
-    for (let i = hour; i != (hour + HOURS_TO_DISPLAY) % 24; i++) {
-        if (i == 24) {
-            nextDay = 1;
-            i = 0;
-        }
 
+    let i = hour;
+    do {
         const { temp_c, condition: { icon } } = forecastday[nextDay].hour[i];
         const time = isFirst ? "Now" : `${i}`;
         const type = isFirst ? "" : ":00";
         promises.push(createCurrentWeather(temp_c, time, type, icon));
-        if(isFirst) isFirst = !isFirst;
-    }
+        if (isFirst) isFirst = !isFirst;
+
+
+        i++;
+        if (i == 24) {
+            nextDay = 1;
+            i = 0;
+        }
+    } while (i != (hour + HOURS_TO_DISPLAY) % 24)
+
 
     const weatherDivs = await Promise.all(promises);
     weatherDivs.forEach((div) => {
@@ -86,20 +92,19 @@ const createForecastWeather = async (weather) => {
 
 }
 
-const createAirQuality = (weather,history) => {
-    const {current : {air_quality: {co,o3}}} = weather;
-    const grade = co < 350 ? "Bardzo dobra":
-                 co < 700 ? "Dobra": 
-                 co < 1000 ? "Zła": 
-                 co < 1400 ? "Bardzo zła": "Niebezpieczna";
+const createAirQuality = (weather) => {
+    const { current: { air_quality: { co, o3 } } } = weather;
+    const grade = co < 350 ? "Bardzo dobra" :
+        co < 700 ? "Dobra" :
+            co < 1000 ? "Zła" :
+                co < 1400 ? "Bardzo zła" : "Niebezpieczna";
     AIR_VALUE.innerText = `${co} - ${grade}`;
-    AIR_DESC.innerText = `Ilość o3 w powietrzu wynosi ${o3}.`;
-    document.documentElement.style.setProperty('--airqualityDot',`${co/20}%`);
+    AIR_DESC.innerHTML = `Ilość O<sub>3</sub> w powietrzu wynosi ${o3}.`;
+    document.documentElement.style.setProperty('--airqualityDot', `${co / 20}%`);
 }
 
-const mainApp = async(city) => {
-    const weather = await fetchWeatherData(city,FORECAST_ENDPOINT,FORECAST_KEYWORDS);
-    console.log(weather);
+const mainApp = async (city) => {
+    const weather = await fetchWeatherData(city, FORECAST_ENDPOINT, FORECAST_KEYWORDS);
     setCurrentTemp(weather);
     createForecastWeather(weather);
     createAirQuality(weather);

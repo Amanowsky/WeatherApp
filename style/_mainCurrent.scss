@@ -1,9 +1,9 @@
-.main_current{
+.mainSection__current{
     grid-area: 1 / 1 / 2 / 3;
     overflow: hidden;
     height: 100%;
     padding: 1% 2%;
-    .main_current_alert{
+    .current__alert{
         display: flex;
         position: relative;
         align-items: center;
@@ -15,7 +15,7 @@
         filter: opacity(0.6);
         
     }
-    .main_current_alert::after{
+    .current__alert::after{
         content: "";
         height: 1px;
         width: 102%;
@@ -23,11 +23,11 @@
         position: absolute; 
         top: 110%;
     }
-    .current_weather{
+    .current__weather{
         height: 90%;
         display: flex;
         gap: 2%;
-        .current_weather_block{
+        .weather__block{
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -37,7 +37,7 @@
             h2{
                 font-weight: 400;
             }
-            .time_mode{
+            .block__timeMode{
                 margin-left: 1px;
                 font-size: 0.8rem;
             }
