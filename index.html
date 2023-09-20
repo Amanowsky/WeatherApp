@@ -24,13 +24,25 @@
             <h4 id="HEADER_HL"></h4>
         </header>
         <main class="weatherApp__mainSection">
+
             <section id="MAIN_CURRENT" class="mainSection mainSection__current">
-                <h3 id="MAIN_CURRENT_ALERT" class="current__alert">Brak aktywnych alertów RCB</h3>
+                <h3 id="MAIN_CURRENT_ALERT" class="current__alert"></h3>
                 <div id="MAIN_CURRENT_WEATHER" class="current__weather"></div>
             </section>
-            <section id="MAIN_FORECAST" class="mainSection mainSection__forecast">lewy dół</section>
+
+            <section id="MAIN_FORECAST" class="mainSection mainSection__forecast">
+                <h2 class="titleBox"><img src="./assets/calendar.svg">10-DAY FORECAST</h2>
+                <div class="forecast__container">
+                    <div class="forecast__container__box"></div>
+                    <div class="forecast__container__box"></div>
+                    <div class="forecast__container__box"></div>
+                    <div class="forecast__container__box"></div>
+                    <div class="forecast__container__box"></div>
+                </div>
+            </section>
+
             <section id="MAIN_AIRQUALITY" class="mainSection mainSection__airquality">
-                <h2><img src="./assets/air.svg">AIR QUALITY (co<sub>2</sub>)</h2>
+                <h2 class="titleBox"><img src="./assets/air.svg">AIR QUALITY (co<sub>2</sub>)</h2>
                 <h3 id="AIR_VALUE"></h3>
                 <h4 id="AIR_DESC"></h4>
                 <div>
@@ -39,6 +51,7 @@
                     </div>
                 </div>
             </section>
+
             <section id="MAIN_MAP" class="mainSection main_map"></section>
         </main>
     </div>

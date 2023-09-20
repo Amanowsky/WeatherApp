@@ -2,9 +2,7 @@ const WEATER_API_KEY = "366e7a28647c4da4803184927231209";
 const BASE_URL = "http://api.weatherapi.com/v1";
 const FORECAST_ENDPOINT = "/forecast.json";
 const FORECAST_KEYWORDS = "&days=7&aqi=yes&lang=pl&alerts=yes";
-const DAYS_TO_FETCH = 7;
 const HOURS_TO_DISPLAY = 13;
-
 const MAIN_CURRENT_WEATHER = document.querySelector("#MAIN_CURRENT_WEATHER");
 const HEADER_CITY = document.querySelector('#HEADER_CITY');
 const HEADER_TEMP = document.querySelector('#HEADER_TEMP');
@@ -13,7 +11,7 @@ const HEADER_HL = document.querySelector('#HEADER_HL');
 const AIR_VALUE = document.querySelector("#AIR_VALUE");
 const AIR_DESC = document.querySelector("#AIR_DESC");
 const AIR_DOT = document.querySelector('#AIR_DOT');
-
+const MAIN_CURRENT_ALERT = document.querySelector('#MAIN_CURRENT_ALERT');
 
 
 
@@ -28,7 +26,7 @@ const setCurrentTemp = (weather) => {
 }
 
 
-const createCurrentWeather = (temp, time, type, icon) => {
+const createHourWeather = (temp, time, type, icon) => {
     const div = document.createElement('div');
     const h2_hour = document.createElement('h2');
     const h2_temp = document.createElement('h2');
@@ -60,7 +58,9 @@ const fetchWeatherData = async (city, type, keywords) => {
     }
 }
 
-const createForecastWeather = async (weather) => {
+const createTodayWeather = async (weather) => {
+    const {alerts: {alert}}  = weather
+    MAIN_CURRENT_ALERT.textContent = alert.length === 0 ? "Brak aktywnych alertów RCB" : alert[0];
     const hour = new Date().getHours();
     let nextDay = 0;
     let isFirst = true;
@@ -73,7 +73,7 @@ const createForecastWeather = async (weather) => {
         const { temp_c, condition: { icon } } = forecastday[nextDay].hour[i];
         const time = isFirst ? "Now" : `${i}`;
         const type = isFirst ? "" : ":00";
-        promises.push(createCurrentWeather(temp_c, time, type, icon));
+        promises.push(createHourWeather(temp_c, time, type, icon));
         if (isFirst) isFirst = !isFirst;
 
 
@@ -105,8 +105,9 @@ const createAirQuality = (weather) => {
 
 const mainApp = async (city) => {
     const weather = await fetchWeatherData(city, FORECAST_ENDPOINT, FORECAST_KEYWORDS);
+    console.log(weather);
     setCurrentTemp(weather);
-    createForecastWeather(weather);
+    createTodayWeather(weather);
     createAirQuality(weather);
 }
 

@@ -1,5 +1,28 @@
 
 .mainSection__forecast{
     grid-area: 2 / 1 / 3 / 2;
+    padding: 1% 3%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    h2{
+        img{
+            margin-right: 1%;
+        }
+    }
+
+    .forecast__container{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        .forecast__container__box{
+            height: 80%;
+            width: 20%;
+            border-right: 1px solid rgba(163, 163, 163, 0.623);
+        }:first-child{
+            border-left: 1px solid rgba(163, 163, 163, 0.623);
+        }
+    }
 }
