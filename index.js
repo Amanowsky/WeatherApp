@@ -17,6 +17,11 @@ const TODAYWEATHER_WEATHERBOXES = document.querySelector("#todayWeather-weatherB
 const WEATHERBOXES_BOXCLASS = "weatherBoxes__box";
 const TODAYWEATHER_ALERT = document.querySelector('#todayWeather-alert');
 
+//ForecastWeather
+const DAYS_TO_DISPLAY = 4;
+const FORECAST_CONTAINER = document.querySelector("#forecast-container");
+
+
 //AirQuality
 const AIRQUALITY_VALUE = document.querySelector("#airquality-value");
 const AIRQUALITY_DESC = document.querySelector("#airquality-desc");
@@ -37,7 +42,42 @@ const setCurrentWeather = (weather) => {
 }
 
 
-const createForecastWeather = (weather) => {}
+const createForecastWeather = (weather) => {
+    const createDayBox = (day,temp_lowest,temp_highest,icon) => {
+        const forecast_container_box = document.createElement('div');
+        const img = document.createElement('img');
+        const forecast_temp_div = document.createElement('div');
+        const temp_lowest_h3 = document.createElement('h3');
+        const temp_highest_h3 = document.createElement('h3');
+        const forecast_ratio_div = document.createElement('div');
+        const forecast_ratio_range_div = document.createElement('div');
+        const day_h2 = document.createElement('h2');
+
+        forecast_container_box.className = "forecast__container__box";
+        forecast_temp_div.className = "forecast__temp";
+        forecast_ratio_div.className = "forecast__ratio";
+        forecast_ratio_range_div.className = "forecast__ratio__range";
+        img.src = `${icon}`;
+        temp_lowest_h3.textContent = `${temp_lowest}°`;
+        temp_highest_h3.textContent = `${temp_highest}°`;
+        day_h2.textContent = `${day}`;
+
+        forecast_ratio_range_div.style.width = `${(temp_highest - temp_lowest) * 2}px`;
+        forecast_ratio_range_div.style.left = `${50+temp_lowest}%`
+        forecast_ratio_div.append(forecast_ratio_range_div);
+        forecast_temp_div.append(temp_lowest_h3, forecast_ratio_div,temp_highest_h3);
+        forecast_container_box.append(img,forecast_temp_div,day_h2);
+        return forecast_container_box;
+    }
+
+    for(let i=0;i<DAYS_TO_DISPLAY;i++){
+        const {forecast:{forecastday}} = weather;
+        const {day: {maxtemp_c,mintemp_c, condition: {icon}}} = forecastday[i];
+
+        FORECAST_CONTAINER.append(createDayBox("Today",Math.round(mintemp_c),Math.round(maxtemp_c),icon));
+    }
+    
+}
 
 
 const fetchWeatherData = async (city, type, keywords) => {
@@ -72,9 +112,6 @@ const createTodayWeather = async (weather) => {
         div.appendChild(h2_temp);
         return div;
     }
-
-
-
     const { alerts: { alert } } = weather
     TODAYWEATHER_ALERT.textContent = alert.length === 0 ? "No active RCB alerts" : alert[0];
     const hour = new Date().getHours();
@@ -124,6 +161,7 @@ const mainApp = async (city) => {
     console.log(weather);
     setCurrentWeather(weather);
     createTodayWeather(weather);
+    createForecastWeather(weather);
     createAirQuality(weather);
 }
 
