@@ -1,9 +1,10 @@
-.mainSection__current{
+.mainSection__todayWeather{
     grid-area: 1 / 1 / 2 / 3;
     overflow: hidden;
     height: 100%;
     padding: 1% 2%;
-    .current__alert{
+
+    .todayWeather__alert{
         display: flex;
         position: relative;
         align-items: center;
@@ -13,9 +14,7 @@
         font-weight: 300;
         color: black;
         filter: opacity(0.6);
-        
-    }
-    .current__alert::after{
+    }.todayWeather__alert::after{
         content: "";
         height: 1px;
         width: 102%;
@@ -23,11 +22,12 @@
         position: absolute; 
         top: 110%;
     }
-    .current__weather{
+    
+    .todayWeather__weatherBoxes{
         height: 90%;
         display: flex;
         gap: 2%;
-        .weather__block{
+        .weatherBoxes__box{
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -37,10 +37,7 @@
             h2{
                 font-weight: 400;
             }
-            .block__timeMode{
-                margin-left: 1px;
-                font-size: 0.8rem;
-            }
+            
         }
     }
 }

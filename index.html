@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style/weaterApp.scss">
+    <link rel="stylesheet" href="style/weatherApp.scss">
 
     <script src="index.js" defer type="module"></script>
 
@@ -17,40 +17,51 @@
 
 <body>
     <div id="weatherApp">
-        <header class="weatherApp__header">
-            <h1 id="HEADER_CITY"></h1>
-            <h2 id="HEADER_TEMP"></h2>
-            <h3 id="HEADER_WEATHER"></h3>
-            <h4 id="HEADER_HL"></h4>
+        <header class="weatherApp__currentWeather">
+            <h1 id="currentWeather-city"></h1>
+            <h2 id="currentWeather-temp"></h2>
+            <h3 id="currentWeather-weather"></h3>
+            <h4 id="currentWeather-hl"></h4>
         </header>
+
         <main class="weatherApp__mainSection">
 
-            <section id="MAIN_CURRENT" class="mainSection mainSection__current">
-                <h3 id="MAIN_CURRENT_ALERT" class="current__alert"></h3>
-                <div id="MAIN_CURRENT_WEATHER" class="current__weather"></div>
+            <section class="mainSection mainSection__todayWeather">
+                <h3 id="todayWeather-alert" class="todayWeather__alert"></h3>
+                <div id="todayWeather-weatherBoxes" class="todayWeather__weatherBoxes"></div>
             </section>
 
-            <section id="MAIN_FORECAST" class="mainSection mainSection__forecast">
-                <h2 class="titleBox"><img src="./assets/calendar.svg">10-DAY FORECAST</h2>
+
+            <section class="mainSection mainSection__forecast">
+                <h2><img src="./assets/calendar.svg">10-DAY FORECAST</h2>
                 <div class="forecast__container">
-                    <div class="forecast__container__box"></div>
-                    <div class="forecast__container__box"></div>
-                    <div class="forecast__container__box"></div>
-                    <div class="forecast__container__box"></div>
-                    <div class="forecast__container__box"></div>
+                    <div class="forecast__container__box">
+                        <img src="./assets/day/113.png">
+                        <div class="forecast__temp">
+                            <h3>18</h3>
+                            <div class="forecast__ratio">
+                                <div class="forecast__ratio__range"></div>
+                            </div>
+                            <h3>23</h3>
+                        </div>
+                        <h2>Today</h2>
+                    </div>
+
                 </div>
             </section>
 
-            <section id="MAIN_AIRQUALITY" class="mainSection mainSection__airquality">
-                <h2 class="titleBox"><img src="./assets/air.svg">AIR QUALITY (co<sub>2</sub>)</h2>
-                <h3 id="AIR_VALUE"></h3>
-                <h4 id="AIR_DESC"></h4>
+
+            <section class="mainSection mainSection__airquality">
+                <h2><img src="./assets/air.svg">AIR QUALITY (CO<sub>2</sub>)</h2>
+                <h3 id="airquality-value"></h3>
+                <h4 id="airquality-desc"></h4>
                 <div>
                     <div class="airquality__ratio">
-                        <div id="AIR_DOT" class="ratio__dot"></div>
+                        <div class="airquality__ratio__dot"></div>
                     </div>
                 </div>
             </section>
+
 
             <section id="MAIN_MAP" class="mainSection main_map"></section>
         </main>

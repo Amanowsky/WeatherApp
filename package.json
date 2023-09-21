@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs": "^0.0.1-security",
     "parcel": "^2.9.3",
     "sass": "^1.66.1"
   },

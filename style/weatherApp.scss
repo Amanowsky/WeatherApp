@@ -1,6 +1,6 @@
 @use 'variables.scss';
-@use 'header.scss';
-@use 'mainCurrent.scss';
+@use 'currentWeater.scss';
+@use 'mainToday.scss';
 @use 'mainForecast.scss';
 @use 'mainAirquality.scss';
 *{
@@ -53,6 +53,8 @@ body{
             filter: opacity(0.7);
         }
 }
+
+
 
 
     .main_map{
