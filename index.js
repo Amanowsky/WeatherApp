@@ -1,5 +1,5 @@
 const WEATHER_API_KEY = "366e7a28647c4da4803184927231209";
-const BASE_URL = "http://api.weatherapi.com/v1";
+const BASE_URL = "https://api.weatherapi.com/v1";
 const FORECAST_ENDPOINT = "/forecast.json";
 const FORECAST_KEYWORDS = "&days=7&aqi=yes&lang=en&alerts=yes";
 
