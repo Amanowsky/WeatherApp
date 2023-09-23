@@ -69,12 +69,16 @@ const createForecastWeather = (weather) => {
         forecast_container_box.append(img,forecast_temp_div,day_h2);
         return forecast_container_box;
     }
-
+    const daysArray = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const date = new Date();
+    let isToday = true;
     for(let i=0;i<DAYS_TO_DISPLAY;i++){
         const {forecast:{forecastday}} = weather;
         const {day: {maxtemp_c,mintemp_c, condition: {icon}}} = forecastday[i];
-
-        FORECAST_CONTAINER.append(createDayBox("Today",Math.round(mintemp_c),Math.round(maxtemp_c),icon));
+        const today = isToday ? "Today" : daysArray[(date.getDay()+i)%7];
+        isToday = false;
+      
+        FORECAST_CONTAINER.append(createDayBox(today,Math.round(mintemp_c),Math.round(maxtemp_c),icon));
     }
     
 }
@@ -127,7 +131,7 @@ const createTodayWeather = async (weather) => {
         const time = isFirst ? "Now" : `${i}`;
         const type = isFirst ? "" : ":00";
         promises.push(createHourBox(temp_c, time, type, icon));
-        if (isFirst) isFirst = !isFirst;
+        isFirst = false;
 
 
         i++;
