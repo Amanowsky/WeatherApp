@@ -1,3 +1,4 @@
+
 const WEATHER_API_KEY = "366e7a28647c4da4803184927231209";
 const BASE_URL = "https://api.weatherapi.com/v1";
 const FORECAST_ENDPOINT = "/forecast.json";
@@ -14,78 +15,26 @@ const CURRENTWEATHER_HL = document.querySelector('#currentWeather-hl');
 //TodayWeather
 const HOURS_TO_DISPLAY = 13;
 const TODAYWEATHER_WEATHERBOXES = document.querySelector("#todayWeather-weatherBoxes");
-const WEATHERBOXES_BOXCLASS = "weatherBoxes__box";
 const TODAYWEATHER_ALERT = document.querySelector('#todayWeather-alert');
+const WEATHERBOXES_BOX_CLASS = "weatherBoxes__box";
 
 //ForecastWeather
 const DAYS_TO_DISPLAY = 4;
 const FORECAST_CONTAINER = document.querySelector("#forecast-container");
+const FORECAST_CONTAINER_BOX_CLASS = "forecast__container__box";
 
 
 //AirQuality
 const AIRQUALITY_VALUE = document.querySelector("#airquality-value");
 const AIRQUALITY_DESC = document.querySelector("#airquality-desc");
 
+//Moon
+const MOON = document.querySelector("#moon");
 
 
-
-
-
-const setCurrentWeather = (weather) => {
-    const { current: { condition: { text }, temp_c }, location: { name }, forecast: { forecastday: [today] } } = weather;
-    const { day: { maxtemp_c, mintemp_c } } = today;
-    CURRENTWEATHER_CITY.textContent = `${name}`;
-    CURRENTWEATHER_TEMP.textContent = `${temp_c}`;
-    CURRENTWEATHER_WEATHER.textContent = `${text}`;
-    CURRENTWEATHER_HL.textContent = `H:${maxtemp_c} L:${mintemp_c}`
-
-}
-
-
-const createForecastWeather = (weather) => {
-    const createDayBox = (day,temp_lowest,temp_highest,icon) => {
-        const forecast_container_box = document.createElement('div');
-        const img = document.createElement('img');
-        const forecast_temp_div = document.createElement('div');
-        const temp_lowest_h3 = document.createElement('h3');
-        const temp_highest_h3 = document.createElement('h3');
-        const forecast_ratio_div = document.createElement('div');
-        const forecast_ratio_range_div = document.createElement('div');
-        const day_h2 = document.createElement('h2');
-
-        forecast_container_box.className = "forecast__container__box";
-        forecast_temp_div.className = "forecast__temp";
-        forecast_ratio_div.className = "forecast__ratio";
-        forecast_ratio_range_div.className = "forecast__ratio__range";
-        img.src = `${icon}`;
-        temp_lowest_h3.textContent = `${temp_lowest}°`;
-        temp_highest_h3.textContent = `${temp_highest}°`;
-        day_h2.textContent = `${day}`;
-
-        forecast_ratio_range_div.style.width = `${(temp_highest - temp_lowest) * 2}px`;
-        forecast_ratio_range_div.style.left = `${50+temp_lowest}%`
-        forecast_ratio_div.append(forecast_ratio_range_div);
-        forecast_temp_div.append(temp_lowest_h3, forecast_ratio_div,temp_highest_h3);
-        forecast_container_box.append(img,forecast_temp_div,day_h2);
-        return forecast_container_box;
-    }
-    const daysArray = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    const date = new Date();
-    let isToday = true;
-    for(let i=0;i<DAYS_TO_DISPLAY;i++){
-        const {forecast:{forecastday}} = weather;
-        const {day: {maxtemp_c,mintemp_c, condition: {icon}}} = forecastday[i];
-        const today = isToday ? "Today" : daysArray[(date.getDay()+i)%7];
-        isToday = false;
-      
-        FORECAST_CONTAINER.append(createDayBox(today,Math.round(mintemp_c),Math.round(maxtemp_c),icon));
-    }
-    
-}
 
 
 const fetchWeatherData = async (city, type, keywords) => {
-
     try {
         const response = await fetch(`${BASE_URL}${type}?key=${WEATHER_API_KEY}&q=${city}${keywords}`);
         if (!response.ok) {
@@ -98,23 +47,28 @@ const fetchWeatherData = async (city, type, keywords) => {
     }
 }
 
-const createTodayWeather = async (weather) => {
+
+
+const setCurrentWeather = (weather) => {
+    const { current: { condition: { text }, temp_c }, location: { name }, forecast: { forecastday: [today] } } = weather;
+    const { day: { maxtemp_c, mintemp_c } } = today;
+    CURRENTWEATHER_CITY.textContent = `${name}`;
+    CURRENTWEATHER_TEMP.textContent = `${temp_c}`;
+    CURRENTWEATHER_WEATHER.textContent = `${text}`;
+    CURRENTWEATHER_HL.textContent = `H:${maxtemp_c} L:${mintemp_c}`
+}
+
+
+const createTodayWeather = (weather) => {
     const createHourBox = (temp, time, type, icon) => {
-        const div = document.createElement('div');
-        const h2_hour = document.createElement('h2');
-        const h2_temp = document.createElement('h2');
-        const span = document.createElement('span');
-        const img = document.createElement('img');
-        div.className = `${WEATHERBOXES_BOXCLASS}`;
-        h2_hour.innerText = `${time}`;
-        span.innerText = `${type}`;
-        img.src = `${icon}`
-        h2_hour.appendChild(span);
-        div.appendChild(h2_hour);
-        div.appendChild(img);
-        h2_temp.innerText = `${temp}°`;
-        div.appendChild(h2_temp);
-        return div;
+        const weatherBoxes_box = document.createElement('div');
+        weatherBoxes_box.className = `${WEATHERBOXES_BOX_CLASS}`;
+        weatherBoxes_box.innerHTML = `
+            <h2> ${time}<span>${type}</span> </h2>
+            <img src="${icon}">
+            <h2> ${temp} </h2>
+        `
+        return weatherBoxes_box;
     }
     const { alerts: { alert } } = weather
     TODAYWEATHER_ALERT.textContent = alert.length === 0 ? "No active RCB alerts" : alert[0];
@@ -122,15 +76,19 @@ const createTodayWeather = async (weather) => {
     let nextDay = 0;
     let isFirst = true;
     const { forecast: { forecastday } } = weather;
-    const promises = [];
 
-
+ 
     let i = hour;
     do {
         const { temp_c, condition: { icon } } = forecastday[nextDay].hour[i];
         const time = isFirst ? "Now" : `${i}`;
         const type = isFirst ? "" : ":00";
-        promises.push(createHourBox(temp_c, time, type, icon));
+        const box = createHourBox(temp_c, time, type, icon);
+        TODAYWEATHER_WEATHERBOXES.append(box);
+        
+
+        
+        
         isFirst = false;
 
 
@@ -141,13 +99,48 @@ const createTodayWeather = async (weather) => {
         }
     } while (i != (hour + HOURS_TO_DISPLAY) % 24)
 
-
-    const weatherDivs = await Promise.all(promises);
-    weatherDivs.forEach((div) => {
-        TODAYWEATHER_WEATHERBOXES.appendChild(div);
-    })
+   
 
 }
+
+
+const createForecastWeather = (weather) => {
+    const createDayBox = (day,temp_lowest,temp_highest,icon) => {
+        const forecast_container_box = document.createElement('div');
+        forecast_container_box.className = `${FORECAST_CONTAINER_BOX_CLASS}`;
+        const width = (temp_highest - temp_lowest) * 2;
+        const left = (50+temp_lowest);
+        forecast_container_box.innerHTML = `
+            <img src="${icon}">
+            <div class = "forecast__temp">
+                <h3>${temp_lowest}°</h3>
+                <div class="forecast__ratio">
+                    <div class="forecast__ratio__range" style="width: ${width}px; left: ${left}%;"> </div>
+                </div>
+                <h3>${temp_highest}°</h3>
+            </div>
+            <h2>${day}</h2>`
+        
+        
+        return forecast_container_box;
+    }
+    const daysArray = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const date = new Date();
+    let isToday = true;
+    for(let i=0;i<DAYS_TO_DISPLAY;i++){
+        const {forecast:{forecastday}} = weather;
+        const {day: {maxtemp_c,mintemp_c, condition: {icon}}} = forecastday[i];
+        const today = isToday ? "Today" : daysArray[(date.getDay()+i)%7];
+        isToday = false;
+        const box = createDayBox(today,Math.round(mintemp_c),Math.round(maxtemp_c),icon)
+        FORECAST_CONTAINER.append(box);
+        
+    }
+    
+}
+
+
+
 
 const createAirQuality = (weather) => {
     const { current: { air_quality: { co, o3 } } } = weather;
@@ -159,6 +152,12 @@ const createAirQuality = (weather) => {
     AIRQUALITY_DESC.innerHTML = `The amount of O<sub>3</sub> in the air is ${o3}.`;
     document.documentElement.style.setProperty('--airqualityDot', `${co / 20}%`);
 }
+
+
+
+
+    
+
 
 const mainApp = async (city) => {
     const weather = await fetchWeatherData(city, FORECAST_ENDPOINT, FORECAST_KEYWORDS);

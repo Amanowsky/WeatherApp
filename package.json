@@ -2,7 +2,6 @@
   "name": "weatherapp",
   "version": "1.0.0",
   "description": "",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html",
@@ -12,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fs": "^0.0.1-security",
     "parcel": "^2.9.3",
     "sass": "^1.66.1"
   },
