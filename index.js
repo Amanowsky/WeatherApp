@@ -19,7 +19,7 @@ const TODAYWEATHER_ALERT = document.querySelector('#todayWeather-alert');
 const WEATHERBOXES_BOX_CLASS = "weatherBoxes__box";
 
 //ForecastWeather
-const DAYS_TO_DISPLAY = 4;
+const DAYS_TO_DISPLAY = 3;
 const FORECAST_CONTAINER = document.querySelector("#forecast-container");
 const FORECAST_CONTAINER_BOX_CLASS = "forecast__container__box";
 
