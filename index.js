@@ -16,12 +16,12 @@ const CURRENTWEATHER_HL = document.querySelector('#currentWeather-hl');
 const HOURS_TO_DISPLAY = 13;
 const TODAYWEATHER_WEATHERBOXES = document.querySelector("#todayWeather-weatherBoxes");
 const TODAYWEATHER_ALERT = document.querySelector('#todayWeather-alert');
-const WEATHERBOXES_BOX_CLASS = "weatherBoxes__box";
+
 
 //ForecastWeather
 const DAYS_TO_DISPLAY = 3;
 const FORECAST_CONTAINER = document.querySelector("#forecast-container");
-const FORECAST_CONTAINER_BOX_CLASS = "forecast__container__box";
+
 
 
 //AirQuality
@@ -60,15 +60,17 @@ const setCurrentWeather = (weather) => {
 
 
 const createTodayWeather = (weather) => {
+    const template = document.getElementById("weatherBoxes-box");
     const createHourBox = (temp, time, type, icon) => {
-        const weatherBoxes_box = document.createElement('div');
-        weatherBoxes_box.className = `${WEATHERBOXES_BOX_CLASS}`;
-        weatherBoxes_box.innerHTML = `
-            <h2> ${time}<span>${type}</span> </h2>
-            <img src="${icon}">
-            <h2> ${temp} </h2>
-        `
-        return weatherBoxes_box;
+        const copy = document.importNode(template.content, true)
+        const h2Elements = copy.querySelectorAll('h2');
+
+        h2Elements[0].querySelector('span').textContent = `${type}`;
+        h2Elements[0].textContent = `${time}` + h2Elements[0].textContent;
+        copy.querySelector('img').src = `${icon}`;
+        copy.querySelectorAll('h2')[1].innerText = `${temp}`;
+
+        return copy;
     }
     const { alerts: { alert } } = weather
     TODAYWEATHER_ALERT.textContent = alert.length === 0 ? "No active RCB alerts" : alert[0];
@@ -105,24 +107,25 @@ const createTodayWeather = (weather) => {
 
 
 const createForecastWeather = (weather) => {
+    const template = document.querySelector("#forecast-container-box");
     const createDayBox = (day,temp_lowest,temp_highest,icon) => {
-        const forecast_container_box = document.createElement('div');
-        forecast_container_box.className = `${FORECAST_CONTAINER_BOX_CLASS}`;
+        const copy = document.importNode(template.content, true);
+        const h3Elements = copy.querySelectorAll("h3");
         const width = (temp_highest - temp_lowest) * 2;
         const left = (50+temp_lowest);
-        forecast_container_box.innerHTML = `
-            <img src="${icon}">
-            <div class = "forecast__temp">
-                <h3>${temp_lowest}°</h3>
-                <div class="forecast__ratio">
-                    <div class="forecast__ratio__range" style="width: ${width}px; left: ${left}%;"> </div>
-                </div>
-                <h3>${temp_highest}°</h3>
-            </div>
-            <h2>${day}</h2>`
+       
+        copy.querySelector("img").src = `${icon}`;
+        copy.querySelector(".forecast__ratio__range").style = `width: ${width}px; left: ${left}%;`
+
+        h3Elements[0].textContent = `${temp_lowest}`;
+        h3Elements[1].textContent = `${temp_highest}`;
+
+        copy.querySelector("h2").textContent = `${day}`;
+
         
         
-        return forecast_container_box;
+        
+        return copy;
     }
     const daysArray = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     const date = new Date();

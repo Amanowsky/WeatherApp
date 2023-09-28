@@ -28,13 +28,35 @@
 
             <section class="mainSection mainSection__todayWeather">
                 <h3 id="todayWeather-alert" class="todayWeather__alert"></h3>
-                <div id="todayWeather-weatherBoxes" class="todayWeather__weatherBoxes"></div>
+                <div id="todayWeather-weatherBoxes" class="todayWeather__weatherBoxes">
+                    <template id="weatherBoxes-box">
+                        <div class="weatherBoxes__box">
+                            <h2><span></span></h2>
+                            <img>
+                            <h2></h2>
+                        </div>
+                    </template>
+                </div>
             </section>
 
 
             <section class="mainSection mainSection__forecast">
                 <h2><img src="./assets/calendar.svg">FORECAST</h2>
-                <div id="forecast-container"  class="forecast__container"></div>
+                <div id="forecast-container" class="forecast__container">
+                    <template id="forecast-container-box">
+                        <div class="forecast__container__box">
+                        <img>
+                        <div class="forecast__temp">
+                            <h3></h3>
+                            <div class="forecast__ratio">
+                                <div class="forecast__ratio__range"></div>
+                            </div>
+                            <h3></h3>
+                        </div>
+                        <h2></h2>
+                    </div>
+                    </template>
+                </div>
             </section>
 
 
@@ -51,7 +73,7 @@
 
 
             <section id="MAIN_MAP" class="mainSection main_map">
-                
+
             </section>
         </main>
     </div>
