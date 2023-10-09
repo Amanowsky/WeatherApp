@@ -163,12 +163,17 @@ const createAirQuality = (weather) => {
 
 
 const mainApp = async (city) => {
+    try {
     const weather = await fetchWeatherData(city, FORECAST_ENDPOINT, FORECAST_KEYWORDS);
     console.log(weather);
     setCurrentWeather(weather);
     createTodayWeather(weather);
     createForecastWeather(weather);
     createAirQuality(weather);
+    }catch (err) {
+        console.log(err);
+    }
+   
 }
 
 mainApp('walbrzych');
