@@ -1,3 +1,6 @@
+const axios = require("axios").default;
+
+
 
 const WEATHER_API_KEY = "366e7a28647c4da4803184927231209";
 const BASE_URL = "https://api.weatherapi.com/v1";
@@ -36,11 +39,8 @@ const MOON = document.querySelector("#moon");
 
 const fetchWeatherData = async (city, type, keywords) => {
     try {
-        const response = await fetch(`${BASE_URL}${type}?key=${WEATHER_API_KEY}&q=${city}${keywords}`);
-        if (!response.ok) {
-            throw new Error(`${response.status}`);
-        }
-        return await response.json();
+        const response = await axios.get(`${BASE_URL}${type}?key=${WEATHER_API_KEY}&q=${city}${keywords}`);
+        return response.data;
     } catch (err) {
         console.log(err);
         return null;
@@ -163,17 +163,18 @@ const createAirQuality = (weather) => {
 
 
 const mainApp = async (city) => {
+    let weather;
     try {
-    const weather = await fetchWeatherData(city, FORECAST_ENDPOINT, FORECAST_KEYWORDS);
+    weather = await fetchWeatherData(city, FORECAST_ENDPOINT, FORECAST_KEYWORDS);
+    }catch (err) {
+        console.log(err);
+        return
+    }
     console.log(weather);
     setCurrentWeather(weather);
     createTodayWeather(weather);
     createForecastWeather(weather);
     createAirQuality(weather);
-    }catch (err) {
-        console.log(err);
-    }
-   
 }
 
 mainApp('walbrzych');
